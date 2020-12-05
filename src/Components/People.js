@@ -94,22 +94,35 @@ function People() {
       phone: "514-398-8930",
       email: "oana.balmau@cs.mcgill.ca",
       imgURL: "https://www.cs.mcgill.ca/media/professors/Devroye.jpg",
-    }
+    },
   ];
 
   const pageStyle = {
     margin: "auto",
   };
 
+  const cardStyle = {
+    minWidth: "200px",
+    maxWidth: "25%",
+    padding: "10px 10px 10px 10px",
+    margin: "auto"
+  };
+
   const cardDeckStyle = {
     width: "100%",
     margin: "auto",
-    padding: "0 0 15px 0"
+    padding: "0 0 15px 0",
+    textAlign: "center",
   };
 
   const titleStyles = {
-    padding: "10px 0 10px 15px"
-  }
+    padding: "10px 0 10px 15px",
+  };
+
+  const titleStyles2 = {
+    padding: "10px 0 10px 0",
+    textAlign: "center"
+  };
 
   const director = [];
   const directorResearch = [];
@@ -120,7 +133,7 @@ function People() {
 
   function cardifyPerson(person) {
     return (
-      <Card style={{ minWidth: "200px", maxWidth: "25%"}}>
+      <Card style={cardStyle}>
         <Card.Img variant="top" src={person.imgURL} />
         <Card.Body>
           <Card.Title>{person.name}</Card.Title>
@@ -134,43 +147,42 @@ function People() {
   }
 
   function makeDecks(persons, jsx) {
-    for (var index = 0; index < persons.length; index += 3) {
-      if (persons[index + 2]) {
-        jsx.push(
-          <CardDeck style={cardDeckStyle}>
-            {cardifyPerson(persons[index])}
-            {cardifyPerson(persons[index + 1])}
-            {cardifyPerson(persons[index + 2])}
-          </CardDeck>
-        );
-      } else if (persons[index + 1]) {
-        jsx.push(
-          <CardDeck style={cardDeckStyle}>
-            {cardifyPerson(persons[index])}
-            {cardifyPerson(persons[index + 1])}
-          </CardDeck>
-        );
-      } else {
-        jsx.push(
-          <CardDeck style={cardDeckStyle}>
-            {cardifyPerson(persons[index])}
-          </CardDeck>
-        );
-      }
+    const jsx2 = [];
+    for (var i = 0; i < persons.length; i++) {
+      jsx2.push(cardifyPerson(persons[i]));
     }
+    jsx.push(<CardDeck style={cardDeckStyle}>{jsx2}</CardDeck>);
   }
 
-  makeDecks(mockData.filter((x) => x.title === "Director of the School"), director);
-  makeDecks(mockData.filter((x) => x.title === "Associate Director of Research"), directorResearch);
-  makeDecks(mockData.filter((x) => x.title === "Professor"), professors);
-  makeDecks(mockData.filter((x) => x.title === "Lecturer"), facultyLecturers);
+  makeDecks(
+    mockData.filter((x) => x.title === "Director of the School"),
+    director
+  );
+  makeDecks(
+    mockData.filter((x) => x.title === "Associate Director of Research"),
+    directorResearch
+  );
+  makeDecks(
+    mockData.filter((x) => x.title === "Professor"),
+    professors
+  );
+  makeDecks(
+    mockData.filter((x) => x.title === "Lecturer"),
+    facultyLecturers
+  );
 
   return (
     <div>
-      <h4 style={titleStyles}>Director of the School</h4>
-      {director}
-      <h4 style={titleStyles}>Associate Director of Research</h4>
-      {directorResearch}
+      <div style={{ display: "flex"}}>
+        <div style={{ width:"50%"}}>
+          <h4 style={titleStyles2}>Director of the School</h4>
+          {director}
+        </div>
+        <div style={{ width: "50%"}}>
+          <h4 style={titleStyles2}>Associate Director of Research</h4>
+          {directorResearch}
+        </div>
+      </div>
       <h4 style={titleStyles}>Professors</h4>
       {professors}
       <h4 style={titleStyles}>Faculty Lecturers</h4>
