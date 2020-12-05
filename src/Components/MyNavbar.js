@@ -48,18 +48,27 @@ function MyNavbar() {
         <img src="socs_logo_nobg.png" style={logoStyle}/>
         <div style={verticalBarStyle}/>
         <h4 style={nameStyle}> McGill School of Computer Science</h4>
-
       </div>
+
       <Navbar variant="light" expand="lg" style={navbarStyle}>
         <Navbar.Brand href="home">CS @ McGill</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link href="prospective">Prospective</Nav.Link>
-            <NavDropdown title="Academics" id="academics-dropdown">
-              <NavDropdown.Item href="undergraduate">
-                Undergraduate
+
+            <NavDropdown title="Prospective" id="prospective-dropdown">
+              <NavDropdown.Item href="generalinfo">General Info</NavDropdown.Item>
+              <NavDropdown.Item href="whycs">Why CS?</NavDropdown.Item>
+              <NavDropdown.Item href="cegep">CEGEP</NavDropdown.Item>
+              <NavDropdown.Item href="freshman">Freshman</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item href="separatedlink">
+                Separated link
               </NavDropdown.Item>
+            </NavDropdown>
+
+            <NavDropdown title="Academics" id="academics-dropdown">
+              <NavDropdown.Item href="undergraduate">Undergraduate</NavDropdown.Item>
               <NavDropdown.Item href="graduate">Graduate</NavDropdown.Item>
               <NavDropdown.Item href="courses">Courses</NavDropdown.Item>
               <NavDropdown.Item href="ta">Teaching Assistant</NavDropdown.Item>
@@ -69,11 +78,27 @@ function MyNavbar() {
                 Separated link
               </NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link>Research</Nav.Link>
+
+            <NavDropdown title="Research" id="research-dropdown">
+              <NavDropdown.Item href="areas">Areas</NavDropdown.Item>
+              <NavDropdown.Item href="techreports">Tech Reports</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item href="separatedlink">
+                Separated link
+              </NavDropdown.Item>
+            </NavDropdown>
+
             <Nav.Link>
                 <Link to="/people">People</Link>
             </Nav.Link>
-            <Nav.Link href="about">About</Nav.Link>
+
+            <NavDropdown title="About" id="about-dropdown">
+              <NavDropdown.Item href="contact">Contact</NavDropdown.Item>
+              <NavDropdown.Item href="facilities">Facilities</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item href="internal">Internal</NavDropdown.Item>
+            </NavDropdown>
+
           </Nav>
           <Form inline>
             <FormControl type="text" placeholder="Search" className="mr-sm-2" />

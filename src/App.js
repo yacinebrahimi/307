@@ -1,6 +1,7 @@
 import "./App.css";
 import MyNavbar from "./Components/MyNavbar";
 import People from "./Components/People";
+import Home from "./Components/Home";
 
 import {
   BrowserRouter as Router,
@@ -13,14 +14,19 @@ import {
 
 function App() {
   return (
-      <Router>
-        <MyNavbar/>
-        <Switch>
-          <Route path="/people">
-            <People/>
-          </Route>
-        </Switch>
-      </Router>
+    <Router>
+      <MyNavbar />
+      <Switch>
+        <Route path="/home">
+          <Home />
+        </Route>
+      </Switch>
+      <Switch>
+        <Route path="/people">
+          <People />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
