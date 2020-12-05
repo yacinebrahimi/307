@@ -7,9 +7,50 @@ import Button from "react-bootstrap/Button";
 import {Link} from "react-router-dom";
 
 function MyNavbar() {
+
+  const bannerStyle = {
+    color: "white",
+    backgroundColor: "#232d52",
+    width: "100%",
+    height: "80px",
+    padding: "0px 0px 0px 20px",
+    display: "flex"
+  }
+
+  const logoStyle = {
+    width: "70px",
+    height: "70px",
+  }
+
+  const navbarStyle = {
+    borderColor: "#7f7f7f",
+    borderStyle: "solid",
+    borderWidth: "0px 0px 1px 0px"
+  }
+
+  const verticalBarStyle = {
+    color: "white",
+    backgroundColor: "white",
+    width: "2px",
+    height: "70px",
+    margin: "5px 10px 5px 30px"
+  }
+
+  const nameStyle = {
+    margin: "auto",
+    marginLeft: "10px"
+
+  }
+
   return (
     <div>
-      <Navbar bg="dark" variant="dark" expand="lg">
+      <div style={bannerStyle}>
+        <img src="socs_logo_nobg.png" style={logoStyle}/>
+        <div style={verticalBarStyle}/>
+        <h4 style={nameStyle}> McGill School of Computer Science</h4>
+
+      </div>
+      <Navbar variant="light" expand="lg" style={navbarStyle}>
         <Navbar.Brand href="home">CS @ McGill</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
