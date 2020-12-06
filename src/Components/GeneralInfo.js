@@ -17,7 +17,7 @@ function GeneralInfo() {
     const subtitleStyle = {
         paddingBottom: "0.5vw",
         color: "black",
-        fontSize: "1.5vw",
+        fontSize: "18pt",
     }
 
     const textStyle = {

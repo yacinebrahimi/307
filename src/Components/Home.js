@@ -1,8 +1,25 @@
 import Carousel from "react-bootstrap/Carousel";
 import { Container, Row, Col } from "react-bootstrap";
 
+import {useEffect, useState} from  "react";
+
 
 function Home() {
+
+    const [media, setMedia] = useState([]);
+
+    useEffect(() => {
+        fetch("http://fall2020-comp307.cs.mcgill.ca:8020/api/media/home")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setMedia(data);
+      })
+      .catch(console.log);
+
+    }, []);
+
+    const events = media.filter(x => x.mediatype === 'event');
 
     const carouselStyle = {
         width: "auto",
@@ -50,10 +67,7 @@ function Home() {
             title: "#ICodeLikeAGirl",
             image: "Icodelikeagirl.jpg"
         }
-
     ]
-
-
 
     return (
         <div>
@@ -146,16 +160,7 @@ function Home() {
                         </Row>
                     </Container>
                 </div>
-
             </div>
-
-
-
-
-
-
-
-
         </div>
     );
 }
