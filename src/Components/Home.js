@@ -1,5 +1,5 @@
 import Carousel from "react-bootstrap/Carousel";
-import { Container, Row, Col, Image } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 
 
 function Home() {

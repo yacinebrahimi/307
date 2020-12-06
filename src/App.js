@@ -2,6 +2,7 @@ import "./App.css";
 import MyNavbar from "./Components/MyNavbar";
 import People from "./Components/People";
 import Home from "./Components/Home";
+import GeneralInfo from "./Components/GeneralInfo";
 
 import {
   BrowserRouter as Router,
@@ -24,6 +25,11 @@ function App() {
       <Switch>
         <Route path="/people">
           <People />
+        </Route>
+      </Switch>
+      <Switch>
+        <Route path="/generalinfo">
+          <GeneralInfo/>
         </Route>
       </Switch>
     </Router>
