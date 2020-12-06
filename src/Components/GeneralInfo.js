@@ -1,5 +1,7 @@
 import { Container, Row, Col } from "react-bootstrap";
 
+import {useState, useEffect } from "react";
+
 
 function GeneralInfo() {
 
@@ -23,8 +25,22 @@ function GeneralInfo() {
     const textStyle = {
         textAlign: "justify",
         textJustify: "inter-word",
+        fontsize: "1vw",
         color: "black"
     }
+
+    const [info, setInfo] = useState({});
+
+    useEffect(() => {
+        fetch("http://fall2020-comp307.cs.mcgill.ca:8020/api/media/generalinf")
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                setInfo(data);
+            })
+            .catch(console.log);
+
+    }, []);
 
     const mockData = {
         subtitle: "McGill School of Computer Science",
@@ -38,7 +54,7 @@ function GeneralInfo() {
             </Container>
 
             <Container style={textContainer}>
-                <Row style={subtitleStyle}>{mockData.subtitle}</Row>
+                <Row style={subtitleStyle}>{info }</Row>
                 <Row style={textStyle}>
                     {mockData.text}
                 </Row>

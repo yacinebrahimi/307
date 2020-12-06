@@ -49,23 +49,14 @@ function Home() {
 
     }, []);
 
-    const events = media.filter(x => x.mediatype === 'event');
-    const teaching = media.filter(x => x.mediatype === 'teaching');
-    const latest = media.filter(x => x.mediatype === 'latest');
+    var events = media.filter(x => x.mediatype === 'event');
+    var teaching = media.filter(x => x.mediatype === 'teaching');
+    var latest = media.filter(x => x.mediatype === 'latest');
 
-    function sortByDate(array) {
+    teaching.sort((a, b) => (Date.parse(b.date) - Date.parse(a.date)));
+    events.sort((a, b) => (Date.parse(b.date) - Date.parse(a.date)));
+    latest.sort((a, b) => (Date.parse(b.date) - Date.parse(a.date)));
 
-        array.sort(function (a, b) {
-            var arrA = a.split('-');
-            var arrB = b.split('-');
-
-            return new Date(new Date(arrB[0], arrB[1], arrB[2])) - new Date(new Date(arrA[0], arrA[1], arrA[2]));
-        });
-    }
-
-    events = sortByDate(events);
-    teaching = sortByDate(teaching);
-    latest = sortByDate(latest);
 
     function carouselItem(latestElement) {
         return (
@@ -76,17 +67,17 @@ function Home() {
                     height="100%"
                     src={latestElement.imgurl}
                 />
-
+                
                 <Carousel.Caption style={captionStyle}>
                     <h3>{latestElement.title}</h3>
                 </Carousel.Caption>
-
             </Carousel.Item>
         );
     }
 
     function makeCarousel(teaching) {
         const jsx = [];
+        if (!teaching) return jsx;
 
         for (var i = 0; i < teaching.length; i++) {
             jsx.push(carouselItem(teaching[i]));
@@ -106,6 +97,7 @@ function Home() {
 
     function makeRows(elements) {
         const jsx = [];
+        if (!elements) return jsx;
 
         for (var i = 0; i < elements.length; i++) {
             jsx.push(rowItem(elements[i]));
