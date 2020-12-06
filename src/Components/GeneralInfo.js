@@ -23,7 +23,6 @@ function GeneralInfo() {
     const textStyle = {
         textAlign: "justify",
         textJustify: "inter-word",
-        fontsize: "1vw",
         color: "black"
     }
 

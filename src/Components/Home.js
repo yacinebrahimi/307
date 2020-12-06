@@ -1,25 +1,10 @@
 import Carousel from "react-bootstrap/Carousel";
 import { Container, Row, Col } from "react-bootstrap";
 
-import {useEffect, useState} from  "react";
+import { useEffect, useState } from "react";
 
 
 function Home() {
-
-    const [media, setMedia] = useState([]);
-
-    useEffect(() => {
-        fetch("http://fall2020-comp307.cs.mcgill.ca:8020/api/media/home")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setMedia(data);
-      })
-      .catch(console.log);
-
-    }, []);
-
-    const events = media.filter(x => x.mediatype === 'event');
 
     const carouselStyle = {
         width: "auto",
@@ -51,63 +36,88 @@ function Home() {
         padding: "1vw 1vw 1vw 1vw"
     }
 
+    const [media, setMedia] = useState([]);
 
+    useEffect(() => {
+        fetch("http://fall2020-comp307.cs.mcgill.ca:8020/api/media/home")
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                setMedia(data);
+            })
+            .catch(console.log);
 
-    const mockData = [
-        {
-            title: "Remote Teaching in the Fall",
-            image: "24_Remote_Teaching_in_the_Fall.png",
+    }, []);
 
-        },
-        {
-            title: "Remote Learning Tools",
-            image: "29_Remote_Learning.png",
-        },
-        {
-            title: "#ICodeLikeAGirl",
-            image: "Icodelikeagirl.jpg"
+    const events = media.filter(x => x.mediatype === 'event');
+    const teaching = media.filter(x => x.mediatype === 'teaching');
+    const latest = media.filter(x => x.mediatype === 'latest');
+
+    function sortByDate(array) {
+
+        array.sort(function (a, b) {
+            var arrA = a.split('-');
+            var arrB = b.split('-');
+
+            return new Date(new Date(arrB[0], arrB[1], arrB[2])) - new Date(new Date(arrA[0], arrA[1], arrA[2]));
+        });
+    }
+
+    events = sortByDate(events);
+    teaching = sortByDate(teaching);
+    latest = sortByDate(latest);
+
+    function carouselItem(latestElement) {
+        return (
+
+            <Carousel.Item interval={2000}>
+                <img
+                    width="50%"
+                    height="100%"
+                    src={latestElement.imgurl}
+                />
+
+                <Carousel.Caption style={captionStyle}>
+                    <h3>{latestElement.title}</h3>
+                </Carousel.Caption>
+
+            </Carousel.Item>
+        );
+    }
+
+    function makeCarousel(teaching) {
+        const jsx = [];
+
+        for (var i = 0; i < teaching.length; i++) {
+            jsx.push(carouselItem(teaching[i]));
         }
-    ]
+
+        return jsx;
+    }
+
+    function rowItem(element) {
+        return (
+            <Row style={rowStyle}>
+                <Col sm={10}>{element.title}</Col>
+                <Col sm={2}>{element.date}</Col>
+            </Row>
+        );
+    }
+
+    function makeRows(elements) {
+        const jsx = [];
+
+        for (var i = 0; i < elements.length; i++) {
+            jsx.push(rowItem(elements[i]));
+        }
+
+        return jsx;
+    }
 
     return (
         <div>
             <Carousel style={carouselStyle}>
-                <Carousel.Item interval={2000}>
-                    <img
-                        width="50%"
-                        height="100%"
-                        src={mockData[0]["image"]}
-                        alt="First Slide"
-                    />
-                    <Carousel.Caption style={captionStyle}>
-                        <h3>{mockData[0]["title"]}</h3>
-                        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-                    </Carousel.Caption>
-                </Carousel.Item>
-                <Carousel.Item interval={2000}>
-                    <img
-                        width="50%"
-                        height="50%"
-                        src={mockData[1]["image"]}
-                        alt="Second Slide"
-                    />
-                    <Carousel.Caption style={captionStyle}>
-                        <h3>{mockData[1]["title"]}</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    </Carousel.Caption>
-                </Carousel.Item>
-                <Carousel.Item interval={2000}>
-                    <img
-                        width="50%"
-                        height="50%"
-                        src={mockData[2]["image"]}
-                        alt="Third slide"
-                    />
-                    <Carousel.Caption style={captionStyle}>
-                        <h3>{mockData[2]["title"]}</h3>
-                        <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-                    </Carousel.Caption>
-                </Carousel.Item>
+                {makeCarousel(teaching)}
             </Carousel>
 
 
@@ -118,22 +128,7 @@ function Home() {
                         <Row style={rowStyle}>
                             <Col>LATEST @ CS</Col>
                         </Row>
-                        <Row style={rowStyle}>
-                            <Col sm={10}>ZINBOOK</Col>
-                            <Col sm={2}>Date posted</Col>
-                        </Row>
-                        <Row style={rowStyle}>
-                            <Col sm={10}>ZINBOOK</Col>
-                            <Col sm={2}>Date posted</Col>
-                        </Row>
-                        <Row style={rowStyle}>
-                            <Col sm={10}>ZINBOOK</Col>
-                            <Col sm={2}>Date posted</Col>
-                        </Row>
-                        <Row style={rowStyle}>
-                            <Col sm={10}>ZINBOOK</Col>
-                            <Col sm={2}>Date posted</Col>
-                        </Row>
+                        {makeRows(latest)}
                     </Container>
                 </div>
 
@@ -142,22 +137,7 @@ function Home() {
                         <Row style={rowStyle}>
                             <Col>EVENTS @ CS</Col>
                         </Row>
-                        <Row style={rowStyle}>
-                            <Col sm={10}>ZINBOOK</Col>
-                            <Col sm={2}>Date posted</Col>
-                        </Row>
-                        <Row style={rowStyle}>
-                            <Col sm={10}>ZINBOOK</Col>
-                            <Col sm={2}>Date posted</Col>
-                        </Row>
-                        <Row style={rowStyle}>
-                            <Col sm={10}>ZINBOOK</Col>
-                            <Col sm={2}>Date posted</Col>
-                        </Row>
-                        <Row style={rowStyle}>
-                            <Col sm={10}>ZINBOOK</Col>
-                            <Col sm={2}>Date posted</Col>
-                        </Row>
+                        {makeRows(events)}
                     </Container>
                 </div>
             </div>
