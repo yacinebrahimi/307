@@ -3,7 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import {useState, useEffect } from "react";
 
 
-function GeneralInfo() {
+function Cegep() {
 
     const titleStyle = {
         color: "#232d52",
@@ -32,7 +32,7 @@ function GeneralInfo() {
     const [info, setInfo] = useState({});
 
     useEffect(() => {
-        fetch("http://fall2020-comp307.cs.mcgill.ca:8020/api/media/generalinfo")
+        fetch("http://fall2020-comp307.cs.mcgill.ca:8020/api/media/cegep")
             .then((res) => res.json())
             .then((data) => {
                 console.log(data);
@@ -67,7 +67,7 @@ function GeneralInfo() {
 
         <div>
             <Container>
-                <Row style={titleStyle}>General Info</Row>
+                <Row style={titleStyle}>CEGEP</Row>
             </Container>
 
             {makeAllTexts(info)}
@@ -80,4 +80,4 @@ function GeneralInfo() {
 
 }
 
-export default GeneralInfo;
+export default Cegep;

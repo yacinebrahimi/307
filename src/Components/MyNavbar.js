@@ -70,13 +70,6 @@ function MyNavbar() {
             <NavDropdown title="Academics" id="academics-dropdown">
               <NavDropdown.Item href="undergraduate">Undergraduate</NavDropdown.Item>
               <NavDropdown.Item href="graduate">Graduate</NavDropdown.Item>
-              <NavDropdown.Item href="courses">Courses</NavDropdown.Item>
-              <NavDropdown.Item href="ta">Teaching Assistant</NavDropdown.Item>
-              <NavDropdown.Item href="funding">Funding</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="separatedlink">
-                Separated link
-              </NavDropdown.Item>
             </NavDropdown>
 
             <NavDropdown title="Research" id="research-dropdown">
