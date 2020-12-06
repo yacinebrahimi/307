@@ -6,7 +6,11 @@ import Nav from "react-bootstrap/Nav";
 import Button from "react-bootstrap/Button";
 import {Link} from "react-router-dom";
 
+import {useState} from "react";
+
 function MyNavbar() {
+
+  const [input, setInput] = useState("");
 
   const bannerStyle = {
     color: "white",
@@ -94,8 +98,8 @@ function MyNavbar() {
 
           </Nav>
           <Form inline>
-            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-            <Button variant="outline-success">Search</Button>
+            <FormControl type="text" placeholder="Search" className="mr-sm-2" onChange={(e) => {setInput(e.target.value.replace(" ", "+"))}}/>
+            <Button variant="outline-success" href={"https://www.google.com/search?q=:mcgill.ca+" + input}>Search</Button>
           </Form>
         </Navbar.Collapse>
       </Navbar>
