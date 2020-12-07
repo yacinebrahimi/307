@@ -9,6 +9,7 @@ import Whycs from "./Components/Whycs";
 import Undergraduate from "./Components/Undergraduate";
 import Graduate from "./Components/Graduate";
 import ResearchArea from "./Components/ResearchArea";
+import Login from "./Components/Login";
 
 import {
   BrowserRouter as Router,
@@ -19,56 +20,55 @@ import {
   useParams,
 } from "react-router-dom";
 
+
 function App() {
   return (
     <Router>
       <MyNavbar />
+
       <Switch>
-      <Route exact path="/">
+        <Route exact path="/">
           <Home />
         </Route>
+
         <Route path="/home">
           <Home />
         </Route>
-      </Switch>
-      <Switch>
+
         <Route path="/people">
           <People />
         </Route>
-      </Switch>
-      <Switch>
+
         <Route path="/generalinfo">
-          <GeneralInfo/>
+          <GeneralInfo />
         </Route>
-      </Switch>
-      <Switch>
+
         <Route path="/cegep">
-          <Cegep/>
+          <Cegep />
         </Route>
-      </Switch>
-      <Switch>
+
         <Route path="/freshman">
-          <Freshman/>
+          <Freshman />
         </Route>
-      </Switch>
-      <Switch>
+
         <Route path="/whycs">
-          <Whycs/>
+          <Whycs />
         </Route>
-      </Switch>
-      <Switch>
+
         <Route path="/undergraduate">
-          <Undergraduate/>
+          <Undergraduate />
         </Route>
-      </Switch>
-      <Switch>
+
         <Route path="/graduate">
-          <Graduate/>
+          <Graduate />
         </Route>
-      </Switch>
-      <Switch>
+
         <Route path="/areas">
-          <ResearchArea/>
+          <ResearchArea />
+        </Route>
+
+        <Route path="/internal">
+          <Login />
         </Route>
       </Switch>
     </Router>

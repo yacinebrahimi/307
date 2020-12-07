@@ -2,10 +2,17 @@ import { Card, CardDeck, Button, Modal, Form } from "react-bootstrap";
 
 import { useEffect, useState } from "react";
 
+import { useCookies } from "react-cookie";
+
 function People() {
   const [people, setPeople] = useState([]);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  const [cookies, setCookie, removeCookie] = useCookies([
+    "username",
+    "password",
+  ]);
 
   var refresh = 0;
 
@@ -213,11 +220,10 @@ function People() {
     </Modal>
   );
 
-  return (
-    <div>
-      {deleteModal}
-      {addModal}
-      <div className="text-center">
+  const editButtons = () => {
+    if (cookies['username']){
+      return (
+        <div className="text-center">
         <Button
           variant="primary"
           style={{ margin: "5px 5px 5px 5px" }}
@@ -233,6 +239,17 @@ function People() {
           Delete
         </Button>
       </div>
+      )
+    } else {
+      return null;
+    }
+  }
+
+  return (
+    <div>
+      {deleteModal}
+      {addModal}
+      {editButtons()}
       <div style={{ display: "flex" }}>
         <div style={{ width: "50%" }}>
           <h4 style={titleStyles2}>Director of the School</h4>

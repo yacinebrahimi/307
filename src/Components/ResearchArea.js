@@ -27,6 +27,22 @@ function ResearchArea() {
         textAlign: "center",
     };
 
+    const [research, setResearch] = useState([]);
+
+    useEffect(() => {
+        fetch("http://fall2020-comp307.cs.mcgill.ca:8020/api/media/research")
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            setResearch(data);
+          })
+          .catch(console.log);
+      }, []);
+
+    const mockData = research.map(r => {return {title: r.title, subjects: JSON.parse(r.j), imgurl: r.imgurl}});
+
+    console.log(mockData);
+      /*
     const mockData = [{
         title: "Artifial Intelligence",
         subjects: ["Natural Language Processing", "Computational Social Science"],
@@ -43,10 +59,13 @@ function ResearchArea() {
         subjects: ["Computer Animation", "Perception"],
         imgurl: "https://www.cs.mcgill.ca/media/research/area/1_Computer_Graphics.jpg"
     }]
+    */
 
     function createDropdowns(subareas) {
 
         const jsx = [];
+
+        if (! subareas) return jsx;
 
         for (var i = 0; i < subareas.length; i++) {
             jsx.push(<Dropdown.ItemText>{subareas[i]}</Dropdown.ItemText>);
