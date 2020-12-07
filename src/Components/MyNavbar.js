@@ -65,10 +65,7 @@ function MyNavbar() {
               <NavDropdown.Item href="whycs">Why CS?</NavDropdown.Item>
               <NavDropdown.Item href="cegep">CEGEP</NavDropdown.Item>
               <NavDropdown.Item href="freshman">Freshman</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="separatedlink">
-                Separated link
-              </NavDropdown.Item>
+
             </NavDropdown>
 
             <NavDropdown title="Academics" id="academics-dropdown">
@@ -78,11 +75,6 @@ function MyNavbar() {
 
             <NavDropdown title="Research" id="research-dropdown">
               <NavDropdown.Item href="areas">Areas</NavDropdown.Item>
-              <NavDropdown.Item href="techreports">Tech Reports</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="separatedlink">
-                Separated link
-              </NavDropdown.Item>
             </NavDropdown>
 
             <Nav.Link>

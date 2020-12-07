@@ -8,6 +8,7 @@ import Freshman from "./Components/Freshman";
 import Whycs from "./Components/Whycs";
 import Undergraduate from "./Components/Undergraduate";
 import Graduate from "./Components/Graduate";
+import ResearchArea from "./Components/ResearchArea";
 
 import {
   BrowserRouter as Router,
@@ -63,6 +64,11 @@ function App() {
       <Switch>
         <Route path="/graduate">
           <Graduate/>
+        </Route>
+      </Switch>
+      <Switch>
+        <Route path="/areas">
+          <ResearchArea/>
         </Route>
       </Switch>
     </Router>
