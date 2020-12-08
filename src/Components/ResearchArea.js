@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { Dropdown, Card, CardDeck, DropdownButton} from "react-bootstrap";
-
+import { Dropdown, Card, CardDeck, DropdownButton, Modal, Button, Form } from "react-bootstrap";
+import { useCookies } from "react-cookie";
 
 function ResearchArea() {
 
@@ -27,45 +27,32 @@ function ResearchArea() {
         textAlign: "center",
     };
 
+    const [cookies, setCookie, removeCookie] = useCookies([
+        "username",
+        "password",
+    ]);
+
     const [research, setResearch] = useState([]);
 
     useEffect(() => {
         fetch("http://fall2020-comp307.cs.mcgill.ca:8020/api/media/research")
-          .then((res) => res.json())
-          .then((data) => {
-            console.log(data);
-            setResearch(data);
-          })
-          .catch(console.log);
-      }, []);
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                setResearch(data);
+            })
+            .catch(console.log);
+    }, []);
 
-    const mockData = research.map(r => {return {title: r.title, subjects: JSON.parse(r.j), imgurl: r.imgurl}});
+    const mockData = research.map(r => { return { title: r.title, subjects: JSON.parse(r.j), imgurl: r.imgurl, id: r.id } });
 
     console.log(mockData);
-      /*
-    const mockData = [{
-        title: "Artifial Intelligence",
-        subjects: ["Natural Language Processing", "Computational Social Science"],
-        imgurl: "https://www.cs.mcgill.ca/media/research/area/5_Artificial_Intelligence.jpg"
-
-
-    }, {
-        title: "Bioinformatics",
-        subjects: ["Computational Biology", "Neuroscience"],
-        imgurl: "https://www.cs.mcgill.ca/media/research/area/6_Bioinformatics_and_Computational_Biology.jpg"
-    },
-    {
-        title: "Computer Graphics",
-        subjects: ["Computer Animation", "Perception"],
-        imgurl: "https://www.cs.mcgill.ca/media/research/area/1_Computer_Graphics.jpg"
-    }]
-    */
 
     function createDropdowns(subareas) {
 
         const jsx = [];
 
-        if (! subareas) return jsx;
+        if (!subareas) return jsx;
 
         for (var i = 0; i < subareas.length; i++) {
             jsx.push(<Dropdown.ItemText>{subareas[i]}</Dropdown.ItemText>);
@@ -94,16 +81,169 @@ function ResearchArea() {
             jsx2.push(cardifyArea(allAreas[i]));
         }
         jsx.push(<CardDeck style={cardDeckStyle}>{jsx2}</CardDeck>);
-        
+
         return jsx;
     }
 
     var returnPage = [];
 
+    const [showAddModal, setShowAddModal] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+    const editButtons = () => {
+        if (cookies['username']) {
+            return (
+                <div className="text-center">
+                    <Button
+                        variant="primary"
+                        style={{ margin: "5px 5px 5px 5px" }}
+                        onClick={() => setShowAddModal(true)}
+                    >
+                        Add
+            </Button>
+                    <Button
+                        variant="danger"
+                        style={{ margin: "5px 5px 5px 5px" }}
+                        onClick={() => setShowDeleteModal(true)}
+                    >
+                        Delete
+            </Button>
+                </div>
+            )
+        } else {
+            return null;
+        }
+    }
+
+    const [inputAddData, setInputAddData] = useState({});
+
+
+
+    const onResearchAreaChange = (e) => {
+        setInputAddData({ ...inputAddData, title: e.target.value });
+
+    }
+
+    const onTopicsChange = (e) => {
+        setInputAddData({ ...inputAddData, j: JSON.stringify(e.target.value.split(", ")) });
+    }
+
+    const onImgurlChange = (e) => {
+        setInputAddData({ ...inputAddData, imgurl: e.target.value });
+
+    }
+
+    const onAddSubmit = async () => {
+        const rawResponse = await fetch(
+            "http://fall2020-comp307.cs.mcgill.ca:8020/api/media/research",
+            {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(inputAddData),
+            }
+        );
+
+        console.log(rawResponse);
+
+        setShowAddModal(false);
+    };
+
+    const addModal = (
+        <Modal show={showAddModal} onHide={() => setShowAddModal(false)}>
+
+            <Modal.Header>
+                <Modal.Title>Add Research Area</Modal.Title>
+            </Modal.Header>
+
+            <Modal.Body>
+
+                <Form>
+                    <Form.Label>Specify the Research Area</Form.Label>
+                    <Form.Control onChange={onResearchAreaChange}></Form.Control>
+
+                    <Form.Label>Topics</Form.Label>
+                    <Form.Control placeholder="Topic1, Topic2, Topic3" onChange={onTopicsChange}></Form.Control>
+
+                    <Form.Label>Image URL</Form.Label>
+                    <Form.Control placeholder="Enter Image URL (direct path to file)" onChange={onImgurlChange}></Form.Control>
+                </Form>
+
+            </Modal.Body>
+
+            <Modal.Footer>
+                <Button variant="primary" onClick={onAddSubmit}>Submit</Button>
+            </Modal.Footer>
+
+
+
+        </Modal>
+
+    );
+
+    function researchAreaTitles() {
+        const jsx = [];
+
+        for (var i = 0; i < mockData.length; i++) {
+            jsx.push(<option>{mockData[i].title}</option>)
+        }
+
+        return jsx;
+    }
+
+    const [areaToDelete, setAreaToDelete] = useState("");
+
+    const onDeleteSubmit = async () => {
+        const rawResponse = await fetch(
+          "http://fall2020-comp307.cs.mcgill.ca:8020/api/media/research/" +
+            areaToDelete,
+          {
+            method: "DELETE",
+          }
+        );
+        console.log(rawResponse);
+        setShowDeleteModal(false);
+      };
+
+    
+
+
+    const deleteModal = (
+        <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
+            <br />
+            <Modal.Header>
+                <Modal.Title>Add Research Area</Modal.Title>
+            </Modal.Header>
+
+            <Modal.Body>
+                <Form>
+                    <Form.Label>Research Areas</Form.Label>
+                    <Form.Control as="select" onChange={(e) => { setAreaToDelete(mockData.find(x => x.title === e.target.value).id) }}>
+                        {researchAreaTitles()}
+                    </Form.Control>
+                </Form>
+            </Modal.Body>
+
+            <Modal.Footer className="text-right">
+                <Button variant="danger" disabled={areaToDelete === ""} onClick={onDeleteSubmit}>
+                    Delete
+            </Button>
+            </Modal.Footer>
+        </Modal>
+    );
+
     return (
         <div>
+            <div>
+                {editButtons()}
+            </div>
 
+            {addModal}
+            {deleteModal}
             {makeDecks(mockData, returnPage)}
+
 
         </div>
 

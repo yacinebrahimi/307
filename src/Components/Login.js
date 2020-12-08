@@ -13,11 +13,11 @@ function Login() {
   const [password, setPassword] = useState("");
   const [showAddContent, setShowAddContent] = useState(false);
   const [content, setContent] = useState({
-      mediatype:"teaching",
-      title: "none",
-      description: "none",
-      date: "2020-12-07",
-      imgurl: "none"
+    mediatype: "teaching",
+    title: "none",
+    description: "none",
+    date: "2020-12-07",
+    imgurl: "none"
   });
   const [failedAdd, setFailedAdd] = useState(false);
 
@@ -27,34 +27,34 @@ function Login() {
   };
 
   const onContentTypeChange = (e) => {
-      if (e.target.value === 'Home Page Carousel') setContent({...content, mediatype:"teaching"});
-      if (e.target.value === 'News') setContent({...content, mediatype:"latest"});
-      if (e.target.value === 'Event') setContent({...content, mediatype:"event"});
-      if (e.target.value === 'General Info') setContent({...content, mediatype:"generalinf"});
-      if (e.target.value === 'Undergraduate') setContent({...content, mediatype:"undergrad"});
-      if (e.target.value === 'Why CS') setContent({...content, mediatype:"whycs"});
+    if (e.target.value === 'Home Page Carousel') setContent({ ...content, mediatype: "teaching" });
+    if (e.target.value === 'News') setContent({ ...content, mediatype: "latest" });
+    if (e.target.value === 'Event') setContent({ ...content, mediatype: "event" });
+    if (e.target.value === 'General Info') setContent({ ...content, mediatype: "generalinf" });
+    if (e.target.value === 'Undergraduate') setContent({ ...content, mediatype: "undergrad" });
+    if (e.target.value === 'Why CS') setContent({ ...content, mediatype: "whycs" });
   };
 
   const onTitleChange = (e) => {
-      setContent({...content, title: e.target.value});
+    setContent({ ...content, title: e.target.value });
   }
 
   const onDescriptionChange = (e) => {
-      setContent({...content, description: e.target.value});
-  } 
+    setContent({ ...content, description: e.target.value });
+  }
 
   const onDateChange = (e) => {
-      setContent({...content, date: e.target.value});
+    setContent({ ...content, date: e.target.value });
   }
 
   const onImageURLChange = (e) => {
-      setContent({...content, imgurl: e.target.value});
+    setContent({ ...content, imgurl: e.target.value });
   }
 
   const onAddContentSubmit = (e) => {
-      e.preventDefault();
-      console.log(content);
-      fetch("http://fall2020-comp307.cs.mcgill.ca:8020/api/media", {
+    e.preventDefault();
+    console.log(content);
+    fetch("http://fall2020-comp307.cs.mcgill.ca:8020/api/media", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -133,73 +133,181 @@ function Login() {
   );
 
   const errorMessage = () => {
-      if (failedAdd) {
-          return (
-              <Alert>
-                  Oops, something wrong occurred!
-              </Alert>
-          )
-      } else {
-          return null;
-      }
+    if (failedAdd) {
+      return (
+        <Alert>
+          Oops, something wrong occurred!
+        </Alert>
+      )
+    } else {
+      return null;
+    }
   }
 
   const addContentModal = (
     <Modal show={showAddContent} onHide={() => setShowAddContent(false)}>
       <Modal.Header>
-          {errorMessage()}
+        {errorMessage()}
         <Modal.Title> Add Content</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-          <Form>
-              <Form.Label>
-                  Content Type
+        <Form>
+          <Form.Label>
+            Content Type
               </Form.Label>
-              <Form.Control as="select" onChange={onContentTypeChange}>
-                  <option>Home Page Carousel</option>
-                  <option>News</option>
-                  <option>Event</option>
-                  <option>General Info</option>
-                  <option>Undergraduate</option>
-                  <option>Why CS</option>
-              </Form.Control>
-              <Form.Label>
-                  Title
+          <Form.Control as="select" onChange={onContentTypeChange}>
+            <option>Home Page Carousel</option>
+            <option>News</option>
+            <option>Event</option>
+            <option>General Info</option>
+            <option>Undergraduate</option>
+            <option>Why CS</option>
+          </Form.Control>
+          <Form.Label>
+            Title
               </Form.Label>
-              <Form.Control onChange={onTitleChange}></Form.Control>
-              <Form.Label>
-                  Description
+          <Form.Control onChange={onTitleChange}></Form.Control>
+          <Form.Label>
+            Description
               </Form.Label>
-              <Form.Control as="textarea" rows={5} onChange={onDescriptionChange}>
-              </Form.Control>
-              <Form.Label>
-                  Date
+          <Form.Control as="textarea" rows={5} onChange={onDescriptionChange}>
+          </Form.Control>
+          <Form.Label>
+            Date
               </Form.Label>
-              <Form.Control placeholder="Enter YYYY-MM-DD" onChange={onDateChange}></Form.Control>
-              <Form.Label>
-                  Image URL
+          <Form.Control placeholder="Enter YYYY-MM-DD" onChange={onDateChange}></Form.Control>
+          <Form.Label>
+            Image URL
               </Form.Label>
-              <Form.Control placeholder="Enter Image URL (direct path to file)" onChange={onImageURLChange}>
-              </Form.Control>
-          </Form>
+          <Form.Control placeholder="Enter Image URL (direct path to file)" onChange={onImageURLChange}>
+          </Form.Control>
+        </Form>
       </Modal.Body>
       <Modal.Footer className="text-right">
-          <Button onClick={onAddContentSubmit}>
-              Submit
+        <Button onClick={onAddContentSubmit}>
+          Submit
           </Button>
       </Modal.Footer>
     </Modal>
   );
 
+  const [showDelete, setShowDelete] = useState(false);
+
+  const [allContent, setAllContent] = useState([]);
+
+  useEffect(() => {
+    fetch("http://fall2020-comp307.cs.mcgill.ca:8020/api/media")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setAllContent(data);
+      })
+      .catch(console.log);
+  }, []);
+
+  const [selectionDelete, setSelectionDelete] = useState("News");
+
+  function makeOptions() {
+
+    var data = [];
+
+    if(selectionDelete === "News") data = allContent.filter(x => x.mediatype === "teaching" || x.mediatype === "event" || x.mediatype === "latest");
+    if(selectionDelete === "General Info") data = allContent.filter(x => x.mediatype === "generalinf");
+    if(selectionDelete === "Why CS?") data = allContent.filter(x => x.mediatype === "whycs");
+    if(selectionDelete === "Undergraduate") data = allContent.filter(x => x.mediatype === "undergrad");
+    if(selectionDelete === "Graduate") data = allContent.filter(x => x.mediatype === "grad");
+    if(selectionDelete === "CEGEP") data = allContent.filter(x => x.mediatype === "cegep");
+    if(selectionDelete === "Freshman") data = allContent.filter(x => x.mediatype === "freshman");
+
+    const jsx = [];
+
+    for(var i = 0; i < data.length; i++) {
+        jsx.push(<option>{data[i].title}</option>);
+    }
+
+    return jsx;
+
+
+  }
+
+
+  
+
+  const [contentToDelete, setContentToDelete] = useState("");
+
+  const onContentDeleteSubmit = async () => {
+    const rawResponse = await fetch(
+      "http://fall2020-comp307.cs.mcgill.ca:8020/api/media/del/" +
+        contentToDelete,
+      {
+        method: "DELETE",
+      }
+    );
+    console.log(rawResponse);
+    setShowDelete(false);
+  };
+
+
+  const deleteContentModal = (
+
+    <Modal show={showDelete} onHide={() => setShowDelete(false)}>
+      <Modal.Header>
+        <Modal.Title>Delete Content</Modal.Title>
+      </Modal.Header>
+
+      <Modal.Body>
+
+        <Form>
+          <Form.Label>Select a Tab</Form.Label>
+          <Form.Control as="select" onChange={(e) => { setSelectionDelete(e.target.value) }}>
+            <option>News</option>
+            <option>General Info</option>
+            <option>Why CS?</option>
+            <option>Undergraduate</option>
+            <option>Graduate</option>
+            <option>CEGEP</option>
+            <option>Freshman</option>
+          </Form.Control>
+
+          <Form.Label>Select Content</Form.Label>
+          <Form.Control as="select" multiple onChange = {(e) => {setContentToDelete(allContent.find(x => x.title === e.target.value).id)}}>
+              {makeOptions()}
+          </Form.Control>
+
+
+        </Form>
+
+      </Modal.Body>
+
+      <Modal.Footer>
+        <div className = "text-right">
+          <Button variant="danger" disabled={contentToDelete === ""} onClick={onContentDeleteSubmit}>Submit</Button>
+        </div>
+      </Modal.Footer>
+
+    </Modal>
+
+  )
+
+
   if (cookies["username"]) {
     return (
       <div>
         {addContentModal}
+        {deleteContentModal}
         <div className="text-center">
           <div>You are logged in</div>
           <br />
           <Button onClick={() => setShowAddContent(true)}>Add Content</Button>
+          <br/>
+          <br/>
+          <Button onClick={() => setShowDelete(true)}>Delete Content</Button>
         </div>
+
+        
+
+
+
       </div>
     );
   }
