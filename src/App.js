@@ -10,6 +10,7 @@ import Undergraduate from "./Components/Undergraduate";
 import Graduate from "./Components/Graduate";
 import ResearchArea from "./Components/ResearchArea";
 import Login from "./Components/Login";
+import News from "./Components/News";
 
 import {
   BrowserRouter as Router,
@@ -69,6 +70,10 @@ function App() {
 
         <Route path="/internal">
           <Login />
+        </Route>
+
+        <Route exact path="/news">
+          <News/>
         </Route>
       </Switch>
     </Router>

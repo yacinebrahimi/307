@@ -184,7 +184,7 @@ function Login() {
         </Form>
       </Modal.Body>
       <Modal.Footer className="text-right">
-        <Button onClick={onAddContentSubmit}>
+        <Button onClick={onAddContentSubmit} disabled={!content.date}>
           Submit
           </Button>
       </Modal.Footer>
@@ -303,15 +303,9 @@ function Login() {
           <br/>
           <Button onClick={() => setShowDelete(true)}>Delete Content</Button>
         </div>
-
-        
-
-
-
       </div>
     );
   }
-
   return loginPage;
 }
 

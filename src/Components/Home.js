@@ -1,5 +1,6 @@
 import Carousel from "react-bootstrap/Carousel";
 import { Container, Row, Col } from "react-bootstrap";
+import {Link} from "react-router-dom";
 
 import { useEffect, useState } from "react";
 
@@ -68,7 +69,7 @@ function Home() {
                     src={latestElement.imgurl}
                 />
                 
-                <Carousel.Caption style={captionStyle}>
+                <Carousel.Caption style={captionStyle} as={Link} to="/news">
                     <h3>{latestElement.title}</h3>
                 </Carousel.Caption>
             </Carousel.Item>
@@ -89,8 +90,8 @@ function Home() {
     function rowItem(element) {
         return (
             <Row style={rowStyle}>
-                <Col sm={10}>{element.title}</Col>
-                <Col sm={2}>{element.date}</Col>
+                <Col sm={8} as={Link} to="/news">{element.title}</Col>
+                <Col sm={4} as={Link} to="/news">{element.date.split("T")[0]}</Col>
             </Row>
         );
     }
@@ -111,10 +112,7 @@ function Home() {
             <Carousel style={carouselStyle}>
                 {makeCarousel(teaching)}
             </Carousel>
-
-
             <div >
-
                 <div style={containerDivStyle}>
                     <Container style={containerStyle}>
                         <Row style={rowStyle}>
@@ -123,7 +121,6 @@ function Home() {
                         {makeRows(latest)}
                     </Container>
                 </div>
-
                 <div style={containerDivStyle}>
                     <Container style={containerStyle}>
                         <Row style={rowStyle}>

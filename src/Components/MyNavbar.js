@@ -60,12 +60,16 @@ function MyNavbar() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
 
+            <NavDropdown title="News" id="news-dropdown">
+              <NavDropdown.Item href="news">News</NavDropdown.Item>
+              <NavDropdown.Item href="news">Events</NavDropdown.Item>
+            </NavDropdown>
+
             <NavDropdown title="Prospective" id="prospective-dropdown">
               <NavDropdown.Item href="generalinfo">General Info</NavDropdown.Item>
               <NavDropdown.Item href="whycs">Why CS?</NavDropdown.Item>
               <NavDropdown.Item href="cegep">CEGEP</NavDropdown.Item>
               <NavDropdown.Item href="freshman">Freshman</NavDropdown.Item>
-
             </NavDropdown>
 
             <NavDropdown title="Academics" id="academics-dropdown">
@@ -77,9 +81,9 @@ function MyNavbar() {
               <NavDropdown.Item href="areas">Areas</NavDropdown.Item>
             </NavDropdown>
 
-            <Nav.Link>
-                <Link to="/people">People</Link>
-            </Nav.Link>
+            <NavDropdown title="People" id="people-dropdown">
+              <NavDropdown.Item href="people">Faculty</NavDropdown.Item>
+            </NavDropdown>
 
             <NavDropdown title="About" id="about-dropdown">
               <NavDropdown.Item href="contact">Contact</NavDropdown.Item>
