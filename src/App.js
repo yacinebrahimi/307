@@ -11,6 +11,7 @@ import Graduate from "./Components/Graduate";
 import ResearchArea from "./Components/ResearchArea";
 import Login from "./Components/Login";
 import News from "./Components/News";
+import Contact from "./Components/Contact";
 
 import {
   BrowserRouter as Router,
@@ -74,6 +75,10 @@ function App() {
 
         <Route exact path="/news">
           <News/>
+        </Route>
+
+        <Route exact path="/contact">
+          <Contact/>
         </Route>
       </Switch>
     </Router>

@@ -87,7 +87,6 @@ function MyNavbar() {
 
             <NavDropdown title="About" id="about-dropdown">
               <NavDropdown.Item href="contact">Contact</NavDropdown.Item>
-              <NavDropdown.Item href="facilities">Facilities</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="internal">Internal</NavDropdown.Item>
             </NavDropdown>
