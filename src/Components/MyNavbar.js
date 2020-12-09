@@ -55,40 +55,40 @@ function MyNavbar() {
       </div>
 
       <Navbar variant="light" expand="lg" style={navbarStyle}>
-        <Navbar.Brand href="home">CS @ McGill</Navbar.Brand>
+        <Navbar.Brand  as={Link} to="/home">CS @ McGill</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
 
             <NavDropdown title="News" id="news-dropdown">
-              <NavDropdown.Item href="news">News</NavDropdown.Item>
-              <NavDropdown.Item href="news">Events</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/news">News</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/news">Events</NavDropdown.Item>
             </NavDropdown>
 
             <NavDropdown title="Prospective" id="prospective-dropdown">
-              <NavDropdown.Item href="generalinfo">General Info</NavDropdown.Item>
-              <NavDropdown.Item href="whycs">Why CS?</NavDropdown.Item>
-              <NavDropdown.Item href="cegep">CEGEP</NavDropdown.Item>
-              <NavDropdown.Item href="freshman">Freshman</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/generalinfo">General Info</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/whycs">Why CS?</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/cegep">CEGEP</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/freshman">Freshman</NavDropdown.Item>
             </NavDropdown>
 
             <NavDropdown title="Academics" id="academics-dropdown">
-              <NavDropdown.Item href="undergraduate">Undergraduate</NavDropdown.Item>
-              <NavDropdown.Item href="graduate">Graduate</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/undergraduate">Undergraduate</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/graduate">Graduate</NavDropdown.Item>
             </NavDropdown>
 
             <NavDropdown title="Research" id="research-dropdown">
-              <NavDropdown.Item href="areas">Areas</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/areas">Areas</NavDropdown.Item>
             </NavDropdown>
 
             <NavDropdown title="People" id="people-dropdown">
-              <NavDropdown.Item href="people">Faculty</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/people">Faculty</NavDropdown.Item>
             </NavDropdown>
 
             <NavDropdown title="About" id="about-dropdown">
-              <NavDropdown.Item href="contact">Contact</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/contact">Contact</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="internal">Internal</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/internal">Internal</NavDropdown.Item>
             </NavDropdown>
 
           </Nav>

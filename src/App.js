@@ -33,6 +33,14 @@ function App() {
           <Home />
         </Route>
 
+        <Route exact path="/~cs307-group20">
+          <Home/>
+        </Route>
+
+        <Route exact path="/~cs307-group20/">
+          <Home/>
+        </Route>
+
         <Route path="/home">
           <Home />
         </Route>
