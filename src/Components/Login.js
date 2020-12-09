@@ -60,7 +60,7 @@ function Login() {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(content),
+      body: JSON.stringify({...content, username: cookies['username'], password: cookies['password']}),
     }).then((res) => {
       if (res.status === 200) {
         setShowAddContent(false);
@@ -241,6 +241,11 @@ function Login() {
         contentToDelete,
       {
         method: "DELETE",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({username: cookies['username'], password: cookies['password']})
       }
     );
     console.log(rawResponse);

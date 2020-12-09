@@ -142,7 +142,7 @@ function ResearchArea() {
                     Accept: "application/json",
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(inputAddData),
+                body: JSON.stringify({...inputAddData, username: cookies['username'], password: cookies['password']}),
             }
         );
 
@@ -201,6 +201,11 @@ function ResearchArea() {
             areaToDelete,
           {
             method: "DELETE",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({username: cookies['username'], password: cookies['password']})
           }
         );
         console.log(rawResponse);

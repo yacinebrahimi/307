@@ -36,6 +36,11 @@ function People() {
         toDelete,
       {
         method: "DELETE",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({username: cookies['username'], password: cookies['password']}),
       }
     );
     console.log(rawResponse);
@@ -68,7 +73,7 @@ function People() {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(form),
+        body: JSON.stringify({...form, username: cookies['username'], password: cookies['password']}),
       }
     );
 
